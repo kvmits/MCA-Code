@@ -1,5 +1,7 @@
 //Write a Program to merge two arrays
 
+#include <stdio.h>
+
 int main() {
     int a1[50], a2[50], result[100];
     int n1, n2, i, j, k;
