@@ -1,0 +1,1 @@
+// Write a C program to create a singly linked list containing 5 nodes. Read an integer value for each node, link the nodes dynamically, and display all the elements of the linked list.
