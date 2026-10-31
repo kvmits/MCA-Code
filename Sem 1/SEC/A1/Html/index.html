@@ -1,0 +1,65 @@
+<!-- Program to calculate the subtotal, discount, shipping charge, and final total of a shopping order.
+same as the python file but with html and css formatting -->
+
+<html>
+    <head>
+        <title>Shopping Order Calculator</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="main-heading">Shopping Order Calculator</h1>
+                <div class="left-right">
+                    <div class="left">
+                        <p class="price_input goodfont">Price Input:</p>
+                        <label class="goodfont">Price:</label>
+                        <input class="input-box" type="number" id="price" placeholder="0$" min="0" required>
+                        <br><br>
+                        <button onclick="calculateOrder()" class="button goodfont">Calculate</button>
+                    </div>
+                    <div class="right">
+                        <p class="order_summary goodfont">Order Summary</p>
+                        <div class="summary-row">
+                            <label for="subtotal" class="goodfont">Subtotal:</label>
+                            <span id="subtotal" class="result goodfont a-right">$0</span>
+                        </div>
+                        <div class="summary-row">
+                            <label for="discount" class="goodfont">Discount:</label>
+                            <span id="discount" class="result goodfont a-right">$0</span>
+                        </div>
+                        <div class="summary-row">
+                            <label for="shipping" class="goodfont">Shipping:</label>
+                            <span id="shipping" class="result goodfont a-right">$0</span>
+                        </div>
+                        <hr class="summary-hr">
+                        <div class="summary-row">
+                            <label style="font-weight: bold;" for="finalTotal" class="goodfont">Final Total:</label>
+                            <span style="color: rgb(24, 207, 0,0.8);" id="finalTotal" class="result goodfont a-right">$0</span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    <script>
+        // JavaScript code for the shopping order calculator
+        function calculateOrder() {
+            const priceInput = document.getElementById('price');
+            const price = parseFloat(priceInput.value);
+
+            if (isNaN(price) || price < 0) {
+                alert("Please enter a valid price.");
+                return;
+            }
+            const subtotal = price;
+            const discount = subtotal * 0.1;
+            const shipping = subtotal > 50 ? 5 : 10;
+            const finalTotal = subtotal - discount + shipping;
+
+            document.getElementById('subtotal').textContent = `+ $${subtotal.toFixed(2)}`;
+            document.getElementById('discount').textContent = `- $${discount.toFixed(2)}`;
+            document.getElementById('shipping').textContent = `+ $${shipping.toFixed(2)}`;
+            document.getElementById('finalTotal').textContent = `$${finalTotal.toFixed(2)}`;
+        }
+    </script>
+    </body>
+</html>

@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>JavaScript String and Math Functions</title>
+        <style>
+            body {
+                font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+                margin: 30px;
+                background-color: #f7f9fc;
+                color: #1f2937;
+                line-height: 1.8;
+            }
+            h1 {
+                color: #0f172a;
+                text-align: center;
+            }
+            h2 {
+                color: #1d4ed8;
+                margin-top: 20px;
+            }
+            p {
+                margin: 6px 0;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>JavaScript String and Math Functions</h1>
+
+        <h2>String Functions</h2>
+        <p id="Original"></p>
+        <p id="Length"></p>
+        <p id="Upper"></p>
+        <p id="Lower"></p>
+        <p id="Index"></p>
+        <p id="Substring"></p>
+        <p id="Concat"></p>
+        <p id="Slice"></p>
+        <p id="Replace"></p>
+        <p id="Split"></p>
+
+        <h2>Math Functions</h2>
+        <p id="OriginalNum"></p>
+        <p id="Rounded"></p>
+        <p id="Floor"></p>
+        <p id="Ceil"></p>
+        <p id="Random"></p>
+        <p id="Abs"></p>
+        <p id="Sqrt"></p>
+        <p id="Pow"></p>
+        <p id="Max"></p>
+        <p id="Min"></p>
+        <p id="PI"></p>
+
+        <script>
+            const str = "Hello, World!";
+
+            document.getElementById("Original").innerHTML = "Original String: " + str;
+            document.getElementById("Length").innerHTML = "Length: " + str.length;
+            document.getElementById("Upper").innerHTML = "Upper Case: " + str.toUpperCase();
+            document.getElementById("Lower").innerHTML = "Lower Case: " + str.toLowerCase();
+            document.getElementById("Index").innerHTML = "Index of 'W': " + str.indexOf("W");
+            document.getElementById("Substring").innerHTML = "Substring (0-5): " + str.substring(0, 5);
+            document.getElementById("Concat").innerHTML = "Concat: " + str.concat(" Welcome!");
+            document.getElementById("Slice").innerHTML = "Slice: " + str.slice(0, 5);
+            document.getElementById("Replace").innerHTML = "Replace: " + str.replace("World", "JavaScript");
+            document.getElementById("Split").innerHTML = "Split: " + str.split(",");
+
+            const number = 9.7;
+
+            document.getElementById("OriginalNum").innerHTML = "Original Number: " + number;
+            document.getElementById("Rounded").innerHTML = "Rounded Value: " + Math.round(number);
+            document.getElementById("Floor").innerHTML = "Floor Value: " + Math.floor(number);
+            document.getElementById("Ceil").innerHTML = "Ceil Value: " + Math.ceil(number);
+            document.getElementById("Random").innerHTML = "Random Value (0-1): " + Math.random();
+            document.getElementById("Abs").innerHTML = "Absolute Value: " + Math.abs(-8);
+            document.getElementById("Sqrt").innerHTML = "Square Root: " + Math.sqrt(25);
+            document.getElementById("Pow").innerHTML = "Power: " + Math.pow(2, 3);
+            document.getElementById("Max").innerHTML = "Maximum: " + Math.max(4, 9, 2);
+            document.getElementById("Min").innerHTML = "Minimum: " + Math.min(4, 9, 2);
+            document.getElementById("PI").innerHTML = "PI: " + Math.PI;
+        </script>
+    </body>
+</html>

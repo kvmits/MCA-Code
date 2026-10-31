@@ -1,0 +1,14 @@
+1. Write a program to calculate and display the area, perimeter of a rectangle by assigning
+values 30 and 20 directly to variables.
+2. Write a program to swap the values of two variables with and without using temporary
+variable.
+3. Write a program to accept marks in three subjects and display the total and average, using
+appropriate data types.
+4. Write a program to perform addition, subtraction, multiplication, division, floor division,
+modulus, and exponentiation on two numbers.
+5. Write a program to decrease a number by 5 using the -= operator.
+6. Write a program to find the largest and smallest of three numbers.
+7. Write a program to check whether a given year is a leap year or not.
+8. Write a program to check whether a number is positive, negative, or zero using nested if.
+9. Write a program to find the sum of digits of a number. Display the reverse of the number.
+10. Write a program to calculate the sum of numbers from 1 to N while skipping multiples of 5.

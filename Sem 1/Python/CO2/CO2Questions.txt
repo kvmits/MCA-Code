@@ -1,0 +1,86 @@
+1. Write a Python program that accepts a sentence as a strin from the user and performs
+the following operations on the given string:
+a) Find the length of the string.
+b) Count the number of vowels, consonants, digits, spaces, and special characters.
+c) Convert the string to uppercase and lowercase.
+d) Check whether the string starts and ends with a specified character.
+e) Count the occurrences of a specified character or substring.
+f) Find the first and last occurrence of a specified character.
+g) Replace a specified character/substring with another.
+h) Remove leading and trailing spaces.
+i) Check whether the string is a palindrome.
+j) Split the string into words and display the number of words.
+k) Sort the characters of the string in ascending order.
+l) Display the string after removing duplicate characters.
+.
+2. Create a dictionary of 5 student names with their marks.
+“Anu&quot;: 85, &quot;Ravi&quot;: 90, &quot;Minu&quot;: 75, &quot;Sara&quot;: 88, &quot;Tom&quot;: 94
+
+a) Access the value of the key Sara
+b) Add a new student &quot;Kiran&quot;: 80 to the dictionary and update &quot;Minu&quot;’s marks to 82.
+c) Delete &quot;Tom&quot; from the dictionary.
+d) Display the names of all students in the dictionary.
+e) Print all keys and values separately.
+f) Sort the dictionary by values in ascending order
+g) Sort the dictionary by keys in ascending order
+h) Display the student with highest marks.
+i) Create another dictionary “Anusha&quot;: 85, &quot;Navin&quot;: 70, &quot;Libin&quot;: 75. Merge the two
+dictionaries
+3. Write a Python program that accepts a list of numbers from the user and performs the
+following operations:
+a) Find the length of the list.
+b) Display the largest and smallest elements.
+c) Find the sum and average of the elements.
+d) Count the occurrences of a specified element.
+e) Find the index of a specified element.
+f) Add an element using append().
+g) Insert an element at a specified position using insert().
+h) Remove a specified element using remove().
+i) Remove the last element using pop().
+j) Sort the list in ascending and descending order.
+k) Reverse the list.
+
+l) Create a list containing only unique elements.
+m) Find the second largest and second smallest elements.
+n) Check whether a specified element exists in the list.
+o) Display the list using slicing (first half, last half, etc.).
+p) Create a new list containing the square of each element.
+q) Separate the elements into even and odd lists. Display the two lists.
+
+4. Write a Python program that accepts a tuple of elements from the user and performs
+the following important tuple operations:
+a) Find the sum and average of numeric elements.
+b) Count the occurrences of a specified element using count().
+c) Find the index of a specified element using index().
+d) Check whether a specified element exists in the tuple.
+e) Access and display elements using indexing.
+f) Display elements using slicing.
+g) Display the tuple in reverse order.
+h) Concatenate the tuple with another tuple.
+i) Repeat the tuple using the * operator.
+j) Convert the tuple into a list, modify it, and convert it back to a tuple.
+k) Find the second largest and second smallest elements.
+l) Count the number of even and odd elements.
+m) Create a new tuple containing the squares of all numeric elements.
+n) Find the common elements between two tuples.
+o) Remove duplicate elements by creating a tuple containing only unique elements.
+
+5) Write a Python program to get the factorial of a number using function.
+6)Write a Python function that accepts a string and counts the number of upper and lower
+case letters.
+7) Write a Python program to solve the Fibonacci sequence using recursion.
+8) Write a Python program to find the greatest common divisor (GCD) of two integers using
+recursion.
+9) Create a Python program that stores book titles in a list. The program should allow the user
+to:
+ Add a new book.
+ Remove a book.
+ Search for a book by title.
+ Display all books.
+ Count how many books contain a particular word.
+ Display the longest book title.
+
+10) Create a package graphics with modules rectangle, circle and sub-package 3D-graphics
+with modules cuboid and sphere. Include methods to find area and perimeter of respective
+figures in each module. Write a program that finds area and perimeter of figures by using
+import statements.

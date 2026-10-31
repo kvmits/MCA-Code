@@ -1,0 +1,52 @@
+<!-- Create a program using JavaScript event listeners on one button. -->
+
+<html>
+    <head>
+        <title>Multiple Event Listeners</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                padding-top: 40px;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.2s, transform 0.2s;
+            }
+            #status {
+                margin-top: 20px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Web Page</h1>
+        <button id="colorButton">Click Me</button>
+        <script>
+            const button = document.getElementById("colorButton");
+            const status = document.getElementById("status");
+
+        button.addEventListener("click", function() {
+            document.body.style.backgroundColor = "lightgreen";
+        });
+
+        button.addEventListener("mouseenter", function() {
+            button.style.backgroundColor = "gold";
+            button.style.transform = "scale(1.1)";
+        });
+
+        button.addEventListener("mouseleave", function() {
+            button.style.backgroundColor = "";
+            button.style.transform = "scale(1)";
+            document.body.style.backgroundColor = "";
+        });
+
+        button.addEventListener("dblclick", function() {
+            document.querySelector("h1").textContent = "Double-click event occurred!";
+        });
+        </script>
+    </body>
+</html>

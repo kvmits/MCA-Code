@@ -1,0 +1,8 @@
+.absolute {
+    position: absolute;
+    top: 150px;
+    left: 30px;
+    width: 300px;
+    padding: 20px;
+    background-color: lightcoral;
+}
