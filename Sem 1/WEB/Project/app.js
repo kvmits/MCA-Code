@@ -31,17 +31,57 @@ const form = document.querySelector("#post-form");
 const kindSelect = document.querySelector("#post-kind");
 const directionSelect = document.querySelector("#post-direction");
 const toast = document.querySelector("#toast");
-const authStorageKey = "campify-demo-authenticated";
+const authStorageKey = "campify-auth-session-v1";
+let currentUserEmail = "";
+const profileMenuButton = document.querySelector("[data-profile-menu]");
+const profileDropdown = document.querySelector(".profile-dropdown");
 
-document.querySelectorAll("[data-logout]").forEach((button) => {
-  button.addEventListener("click", () => {
+try {
+  const session = JSON.parse(sessionStorage.getItem(authStorageKey) || "null");
+  currentUserEmail = session?.email || "";
+  const avatarButton = document.querySelector("[data-profile-menu]");
+  if (session?.displayName && avatarButton) {
+    avatarButton.textContent = session.displayName.charAt(0).toUpperCase();
+  }
+} catch (error) {
+  console.warn("Campify could not read the display name from the login session.", error);
+}
+
+function logout() {
     try {
       sessionStorage.removeItem(authStorageKey);
     } catch (error) {
-      console.warn("Campify could not clear the demo login session.", error);
+      console.warn("Campify could not clear the login session.", error);
     }
     window.location.replace("login.html");
-  });
+}
+
+profileMenuButton.addEventListener("click", () => {
+  const isOpen = !profileDropdown.hidden;
+  profileDropdown.hidden = isOpen;
+  profileMenuButton.setAttribute("aria-expanded", String(!isOpen));
+});
+
+document.querySelector("[data-profile]").addEventListener("click", () => {
+  profileDropdown.hidden = true;
+  profileMenuButton.setAttribute("aria-expanded", "false");
+  showToast("Profile settings are coming soon.");
+});
+
+document.querySelector("[data-logout]").addEventListener("click", logout);
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".profile-menu")) {
+    profileDropdown.hidden = true;
+    profileMenuButton.setAttribute("aria-expanded", "false");
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    profileDropdown.hidden = true;
+    profileMenuButton.setAttribute("aria-expanded", "false");
+  }
 });
 
 function readStorage(key, fallback) {
@@ -75,6 +115,11 @@ function formatPrice(price) {
   return Number(price) === 0 ? "Free" : `₹${Number(price).toLocaleString("en-IN")}`;
 }
 
+function getListingEmail(listing) {
+  if (listing.email) return listing.email;
+  return `${String(listing.seller).toLowerCase().replace(/[^a-z0-9]+/g, ".")}@mgits.ac.in`;
+}
+
 function filteredListings() {
   const query = searchInput.value.trim().toLowerCase();
   const kind = currentView === "items" ? "item" : "gig";
@@ -93,6 +138,7 @@ function renderListings() {
     const title = escapeHTML(listing.title);
     const description = escapeHTML(listing.description);
     const seller = escapeHTML(listing.seller);
+    const listingEmail = escapeHTML(getListingEmail(listing));
     const tag = escapeHTML(listing.tag || (listing.kind === "gig" ? "STUDENT HELP" : "CAMPUS FIND"));
     const saved = savedIds.has(listing.id);
     const price = listing.kind === "gig" && listing.direction === "request"
@@ -108,6 +154,7 @@ function renderListings() {
       <div class="card-content"><div class="card-title-row"><h3 class="card-title">${title}</h3><span class="card-price">${price}</span></div>
         <p class="card-description">${description}</p>
         <div class="card-meta"><span class="seller"><span class="seller-avatar">${escapeHTML(listing.initial || seller.charAt(0).toUpperCase())}</span>${seller}</span><span>${escapeHTML(listing.time || "Just now")}</span></div>
+        <button class="enquire-button" type="button" data-enquire="${escapeHTML(listing.id)}" data-email="${listingEmail}" data-title="${title}">Enquire <span aria-hidden="true">→</span></button>
       </div>
     </article>`;
   }).join("");
@@ -207,6 +254,16 @@ dialog.addEventListener("click", (event) => {
   if (event.target === dialog) dialog.close();
 });
 grid.addEventListener("click", (event) => {
+  const enquireButton = event.target.closest("[data-enquire]");
+  if (enquireButton) {
+    const title = enquireButton.dataset.title;
+    const recipient = enquireButton.dataset.email;
+    const subject = `I'm interested in ${title}`;
+    const body = `I'm interested in ${title}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(gmailUrl, "_blank", "noopener,noreferrer");
+    return;
+  }
   const button = event.target.closest("[data-save]");
   if (!button) return;
   const id = button.dataset.save;
@@ -233,6 +290,7 @@ form.addEventListener("submit", (event) => {
       category: kind === "gig" ? "help" : data.get("category"),
       ...(kind === "gig" ? { direction: data.get("direction") } : {}),
       seller,
+      email: currentUserEmail,
       initial: "Y",
       time: "Just now",
       emoji: kind === "gig" ? "✳" : "📦",

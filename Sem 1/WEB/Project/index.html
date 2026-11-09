@@ -8,7 +8,7 @@
     <title>Campify — Your campus, your marketplace</title>
     <script>
       try {
-        if (sessionStorage.getItem("campify-demo-authenticated") !== "true") {
+        if (!sessionStorage.getItem("campify-auth-session-v1")) {
           window.location.replace("login.html");
         }
       } catch (error) {
@@ -23,17 +23,27 @@
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="#" aria-label="Campify home">
-        <span class="brand-mark" aria-hidden="true">c</span>
-        <span>campify<span class="brand-dot">.</span></span>
-      </a>
+      <div class="collab-brand">
+        <a class="brand" href="#" aria-label="Campify home">
+          <span class="brand-mark" aria-hidden="true">c</span>
+          <span>campify<span class="brand-dot">.</span></span>
+        </a>
+        <span class="collab-divider" aria-hidden="true">|</span>
+        <img class="college-logo" src="collegelogo.png" alt="MITS">
+      </div>
       <nav class="main-nav" aria-label="Main navigation">
         <a class="nav-link active" href="#marketplace">Marketplace</a>
         <a class="nav-link" href="#marketplace" data-nav-view="gigs">Student help</a>
       </nav>
       <div class="top-actions">
         <span class="campus-pill"><span class="status-dot"></span> MITS campus · preview</span>
-        <button class="avatar-button" type="button" data-logout aria-label="Sign out">A</button>
+        <div class="profile-menu">
+          <button class="avatar-button" type="button" aria-label="Open profile menu" aria-expanded="false" aria-haspopup="menu" data-profile-menu>A</button>
+          <div class="profile-dropdown" role="menu" hidden>
+            <button type="button" role="menuitem" data-profile>Profile</button>
+            <button type="button" role="menuitem" data-logout>Logout</button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -63,7 +73,10 @@
             <div class="eyebrow">A LITTLE BIT OF EVERYTHING</div>
             <h2 id="market-title">The campus marketplace</h2>
           </div>
-          <button class="button button-dark post-button" type="button" data-open-modal><span aria-hidden="true">＋</span> Post something</button>
+          <div class="listing-actions">
+            <button class="button button-dark post-button" type="button" data-open-modal><span aria-hidden="true">＋</span> Post something</button>
+            <button class="button button-outline help-button" type="button" data-open-modal data-kind="gig">Explore student help <span aria-hidden="true">＋</span></button>
+          </div>
         </div>
         <div class="market-toolbar">
           <label class="search-box">
@@ -90,17 +103,6 @@
           <button class="text-button" type="button" id="clear-filters">Clear filters</button>
         </div>
         <div class="browse-more"><span>That's the latest from your campus.</span><button class="text-button" type="button" id="show-all">Show all listings <span aria-hidden="true">→</span></button></div>
-      </section>
-
-      <section class="help-banner" id="gigs">
-        <div class="help-icon" aria-hidden="true">✳</div>
-        <div class="help-copy">
-          <div class="eyebrow">GOOD AT SOMETHING?</div>
-          <h2>Your skills have a place here.</h2>
-          <p>Offer tutoring, project guidance, design, or a hand with a tricky concept. Learn together, don't do someone else's coursework.</p>
-        </div>
-        <button class="button button-light" type="button" data-open-modal data-kind="gig">Explore student help <span aria-hidden="true">↗</span></button>
-        <div class="banner-decoration" aria-hidden="true">✳</div>
       </section>
 
       <section class="campus-note">

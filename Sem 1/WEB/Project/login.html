@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f7f8f5">
-    <meta name="description" content="Sign in to Campify, your campus marketplace.">
-    <title>Sign in — Campify</title>
+    <meta name="description" content="Sign in or create an account for Campify, your campus marketplace.">
+    <title>Welcome to Campify</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,10 +14,6 @@
   </head>
   <body>
     <section class="login-screen" aria-labelledby="login-title">
-      <a class="brand login-brand" href="login.html" aria-label="Campify home">
-        <span class="brand-mark" aria-hidden="true">c</span>
-        <span>campify<span class="brand-dot">.</span></span>
-      </a>
       <div class="login-layout">
         <div class="login-story">
           <div class="login-orbit orbit-one"></div>
@@ -25,7 +21,7 @@
           <div class="login-story-content">
             <div class="eyebrow"><span class="eyebrow-spark">✳</span> YOUR CAMPUS, YOUR COMMUNITY</div>
             <h1>Campus life<br>just got <span>closer.</span></h1>
-            <p>Find your next great thing, share what you're good at, and connect with students around you.</p>
+            <p>Buy, sell, and discover student help within your campus community.</p>
             <div class="login-story-note"><span class="login-note-icon">↗</span><span><b>Good things happen nearby.</b><small>Your campus marketplace starts here.</small></span></div>
             <div class="login-sticker">CAMPUS<br>ONLY <span>☺</span></div>
           </div>
@@ -33,20 +29,39 @@
         </div>
         <div class="login-panel">
           <div class="login-panel-inner">
-            <div class="login-welcome-icon" aria-hidden="true">✳</div>
+            <div class="collab-brand login-panel-brand">
+              <a class="brand" href="login.html" aria-label="Campify home">
+                <span class="brand-mark" aria-hidden="true">c</span>
+                <span>campify<span class="brand-dot">.</span></span>
+              </a>
+              <span class="collab-divider" aria-hidden="true">|</span>
+              <img class="college-logo" src="collegelogo.png" alt="MITS">
+            </div>
             <div class="eyebrow">WELCOME TO CAMPIFY</div>
+            <div class="auth-tabs" role="tablist" aria-label="Account access">
+              <button class="auth-tab active" type="button" role="tab" aria-selected="true" aria-controls="login-form" data-auth-mode="login">Sign in</button>
+              <button class="auth-tab" type="button" role="tab" aria-selected="false" aria-controls="login-form" data-auth-mode="register">Create account</button>
+            </div>
             <h2 id="login-title">Let's get you in.</h2>
             <p class="login-intro">Sign in to explore your campus marketplace.</p>
             <form id="login-form" novalidate>
-              <label class="field-label" for="login-username">Username</label>
-              <input id="login-username" name="username" type="text" autocomplete="username" placeholder="Enter your username" required>
+              <label class="field-label" for="login-email">Email</label>
+              <input id="login-email" name="email" type="email" autocomplete="email" placeholder="email@mgits.ac.in" required>
+              <div id="display-name-field" hidden>
+                <label class="field-label" for="login-display-name">Display name</label>
+                <input id="login-display-name" name="display-name" type="text" autocomplete="name" placeholder="How should people know you?">
+              </div>
               <label class="field-label" for="login-password">Password</label>
               <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
-              <p class="login-error" id="login-error" role="alert" hidden>That username and password don't match. Try again.</p>
-              <button class="button button-dark login-submit" type="submit">Sign in <span aria-hidden="true">→</span></button>
+              <div id="confirm-password-field" hidden>
+                <label class="field-label" for="login-confirm-password">Confirm password</label>
+                <input id="login-confirm-password" name="confirm-password" type="password" autocomplete="new-password" placeholder="Re-enter your password">
+              </div>
+              <p class="login-error" id="login-error" role="alert" hidden>That email and password don't match. Try again.</p>
+              <button class="button button-dark login-submit" type="submit"><span id="submit-label">Sign in</span> <span aria-hidden="true">→</span></button>
             </form>
-            <div class="demo-credentials"><span class="demo-lock">⌑</span><span><b>Demo access</b><small>Username: <strong>admin</strong> &nbsp;·&nbsp; Password: <strong>admin</strong></small></span></div>
-            <p class="login-disclaimer">Demo login only. This front-end preview does not provide real account security or campus verification.</p>
+            <div class="demo-credentials"><span class="demo-lock">⌑</span><span><b>Private on this browser</b><small>Your account data stays in this browser.</small></span></div>
+            <p class="login-disclaimer">This is a browser-only account system for the front-end preview. It does not provide server-backed security or campus verification.</p>
           </div>
         </div>
       </div>
