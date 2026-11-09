@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8f5">
+    <meta name="description" content="Sign in to Campify, your campus marketplace.">
+    <title>Sign in — Campify</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="login.js" defer></script>
+  </head>
+  <body>
+    <section class="login-screen" aria-labelledby="login-title">
+      <a class="brand login-brand" href="login.html" aria-label="Campify home">
+        <span class="brand-mark" aria-hidden="true">c</span>
+        <span>campify<span class="brand-dot">.</span></span>
+      </a>
+      <div class="login-layout">
+        <div class="login-story">
+          <div class="login-orbit orbit-one"></div>
+          <div class="login-orbit orbit-two"></div>
+          <div class="login-story-content">
+            <div class="eyebrow"><span class="eyebrow-spark">✳</span> YOUR CAMPUS, YOUR COMMUNITY</div>
+            <h1>Campus life<br>just got <span>closer.</span></h1>
+            <p>Find your next great thing, share what you're good at, and connect with students around you.</p>
+            <div class="login-story-note"><span class="login-note-icon">↗</span><span><b>Good things happen nearby.</b><small>Your campus marketplace starts here.</small></span></div>
+            <div class="login-sticker">CAMPUS<br>ONLY <span>☺</span></div>
+          </div>
+          <div class="login-story-footer"><span class="status-dot"></span> A LITTLE MORE LOCAL. A LOT MORE YOU.</div>
+        </div>
+        <div class="login-panel">
+          <div class="login-panel-inner">
+            <div class="login-welcome-icon" aria-hidden="true">✳</div>
+            <div class="eyebrow">WELCOME TO CAMPIFY</div>
+            <h2 id="login-title">Let's get you in.</h2>
+            <p class="login-intro">Sign in to explore your campus marketplace.</p>
+            <form id="login-form" novalidate>
+              <label class="field-label" for="login-username">Username</label>
+              <input id="login-username" name="username" type="text" autocomplete="username" placeholder="Enter your username" required>
+              <label class="field-label" for="login-password">Password</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+              <p class="login-error" id="login-error" role="alert" hidden>That username and password don't match. Try again.</p>
+              <button class="button button-dark login-submit" type="submit">Sign in <span aria-hidden="true">→</span></button>
+            </form>
+            <div class="demo-credentials"><span class="demo-lock">⌑</span><span><b>Demo access</b><small>Username: <strong>admin</strong> &nbsp;·&nbsp; Password: <strong>admin</strong></small></span></div>
+            <p class="login-disclaimer">Demo login only. This front-end preview does not provide real account security or campus verification.</p>
+          </div>
+        </div>
+      </div>
+      <div class="login-bottom"><span>campify<span class="brand-dot">.</span></span><span>Made for campus life <span class="footer-heart">♥</span></span></div>
+    </section>
+  </body>
+</html>

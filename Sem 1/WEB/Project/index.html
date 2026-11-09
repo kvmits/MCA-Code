@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8f5">
+    <meta name="description" content="Buy, sell, and find student-to-student help on your campus with Campify.">
+    <title>Campify — Your campus, your marketplace</title>
+    <script>
+      try {
+        if (sessionStorage.getItem("campify-demo-authenticated") !== "true") {
+          window.location.replace("login.html");
+        }
+      } catch (error) {
+        window.location.replace("login.html");
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Campify home">
+        <span class="brand-mark" aria-hidden="true">c</span>
+        <span>campify<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#marketplace">Marketplace</a>
+        <a class="nav-link" href="#marketplace" data-nav-view="gigs">Student help</a>
+      </nav>
+      <div class="top-actions">
+        <span class="campus-pill"><span class="status-dot"></span> MITS campus · preview</span>
+        <button class="avatar-button" type="button" data-logout aria-label="Sign out">A</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-spark">✳</span> THE CAMPUS MARKETPLACE</div>
+          <h1 id="hero-title">Good finds.<br><span>Great campus energy.</span></h1>
+          <p>Buy, sell, and find a helping hand — all from people right here on campus.</p>
+          <a class="button button-dark hero-cta" href="#marketplace">Explore the marketplace <span aria-hidden="true">↘</span></a>
+          <div class="hero-trust"><span class="mini-avatars" aria-hidden="true"><i>J</i><i>M</i><i>S</i></span><span>Made for students, by students</span></div>
+        </div>
+        <div class="hero-art" aria-label="A snapshot of campus life">
+          <div class="art-sun"></div>
+          <div class="art-label"><span class="status-dot"></span> YOUR CAMPUS, CONNECTED</div>
+          <div class="art-note art-note-top"><span class="note-icon note-green">↗</span><span><b>Found it on campus</b><small>And met the seller at the cafe ☕</small></span></div>
+          <div class="art-plant"><span></span><i></i><b></b></div>
+          <div class="art-tote">CAMPUS<br>FINDS<span>✳</span></div>
+          <div class="art-note art-note-bottom"><span class="note-icon note-yellow">✳</span><span><b>Skills go a long way</b><small>Share what you know</small></span></div>
+          <div class="art-sticker">LOCAL<br>ONLY<span>☺</span></div>
+        </div>
+      </section>
+
+      <section class="market-section" id="marketplace" aria-labelledby="market-title">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">A LITTLE BIT OF EVERYTHING</div>
+            <h2 id="market-title">The campus marketplace</h2>
+          </div>
+          <button class="button button-dark post-button" type="button" data-open-modal><span aria-hidden="true">＋</span> Post something</button>
+        </div>
+        <div class="market-toolbar">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="search-input" type="search" placeholder="Search finds, books, bikes..." aria-label="Search listings">
+            <kbd>⌘ K</kbd>
+          </label>
+          <div class="market-tabs" role="tablist" aria-label="Marketplace sections">
+            <button class="market-tab active" type="button" role="tab" aria-selected="true" data-view="items">For sale <span>08</span></button>
+            <button class="market-tab" type="button" role="tab" aria-selected="false" data-view="gigs">Student help <span>06</span></button>
+          </div>
+        </div>
+        <div class="category-row" aria-label="Filter by category">
+          <button class="category-chip active" type="button" data-category="all">Everything</button>
+          <button class="category-chip" type="button" data-category="books">Books & notes</button>
+          <button class="category-chip" type="button" data-category="tech">Tech</button>
+          <button class="category-chip" type="button" data-category="living">Room & living</button>
+          <button class="category-chip" type="button" data-category="style">Style</button>
+          <button class="category-chip" type="button" data-category="help">Tutoring & skills</button>
+        </div>
+        <div id="listing-grid" class="listing-grid" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state" hidden>
+          <span>✳</span><h3>No matches just yet</h3><p>Try a different search or category.</p>
+          <button class="text-button" type="button" id="clear-filters">Clear filters</button>
+        </div>
+        <div class="browse-more"><span>That's the latest from your campus.</span><button class="text-button" type="button" id="show-all">Show all listings <span aria-hidden="true">→</span></button></div>
+      </section>
+
+      <section class="help-banner" id="gigs">
+        <div class="help-icon" aria-hidden="true">✳</div>
+        <div class="help-copy">
+          <div class="eyebrow">GOOD AT SOMETHING?</div>
+          <h2>Your skills have a place here.</h2>
+          <p>Offer tutoring, project guidance, design, or a hand with a tricky concept. Learn together, don't do someone else's coursework.</p>
+        </div>
+        <button class="button button-light" type="button" data-open-modal data-kind="gig">Explore student help <span aria-hidden="true">↗</span></button>
+        <div class="banner-decoration" aria-hidden="true">✳</div>
+      </section>
+
+      <section class="campus-note">
+        <span class="campus-note-icon">◎</span>
+        <div><b>Campus-sized community. Real student connections.</b>        <p>This is a front-end preview: posts stay in this browser and campus membership is not verified yet. Meet in public places and verify campus membership before exchanging.</p></div>
+        <span class="verified-label"><span class="status-dot"></span> CAMPUS FIRST</span>
+      </section>
+    </main>
+
+    <footer class="footer"><a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true">c</span><span>campify<span class="brand-dot">.</span></span></a><span>Made for campus life <span class="footer-heart">♥</span></span><span class="footer-campus">MITS campus · Student marketplace</span></footer>
+
+    <dialog class="post-dialog" id="post-dialog" aria-labelledby="dialog-title">
+      <form id="post-form">
+        <div class="dialog-heading">
+          <div><div class="eyebrow">YOUR CAMPUS, YOUR COMMUNITY</div><h2 id="dialog-title">Share it with campus</h2></div>
+          <button class="close-button" type="button" aria-label="Close dialog" data-close-modal>×</button>
+        </div>
+        <label class="field-label" for="post-kind">What would you like to post?</label>
+        <select id="post-kind" name="kind">
+          <option value="item">An item for sale</option>
+          <option value="gig">Student help (offer or request)</option>
+        </select>
+        <div class="gig-direction-field" hidden>
+          <label class="field-label" for="post-direction">What kind of post?</label>
+          <select id="post-direction" name="direction">
+            <option value="offer">I'm offering a skill</option>
+            <option value="request">I'm looking for student help</option>
+          </select>
+        </div>
+        <label class="field-label" for="post-title">Give it a title</label>
+        <input id="post-title" name="title" type="text" maxlength="60" placeholder="e.g. Graphing calculator, barely used" required>
+        <label class="field-label" for="post-description">A few details</label>
+        <textarea id="post-description" name="description" rows="3" maxlength="240" placeholder="What should fellow students know?" required></textarea>
+        <div class="form-row">
+          <div class="form-field"><label class="field-label" for="post-price" id="price-label">Price (₹)</label><input id="post-price" name="price" type="number" min="0" step="1" placeholder="500" required></div>
+          <div class="form-field"><label class="field-label" for="post-category">Category</label><select id="post-category" name="category"><option value="books">Books & notes</option><option value="tech">Tech</option><option value="living">Room & living</option><option value="style">Style</option><option value="help">Tutoring & skills</option><option value="other">Other</option></select></div>
+        </div>
+        <label class="field-label" for="post-image">Add a photo <span class="optional-label">optional</span></label>
+        <input class="file-input" id="post-image" name="image" type="file" accept="image/*">
+        <p class="form-hint" id="form-hint">Only post items you own and can hand over safely on campus.</p>
+        <button class="button button-dark submit-button" type="submit">Post to campus <span aria-hidden="true">↗</span></button>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
