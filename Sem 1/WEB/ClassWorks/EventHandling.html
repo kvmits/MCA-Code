@@ -1,0 +1,22 @@
+<html>
+<head>
+    <script>
+        function ButtonClick() {
+            document.getElementById('status').innerHTML = 'Button Pressed!';
+        }        
+        document.addEventListener('DOMContentLoaded', function() {
+            var status = document.getElementById('status');
+            status.addEventListener('mouseenter', function() {
+                status.style.color = 'red';
+            });
+            status.addEventListener('mouseleave', function() {
+                status.style.color = '';
+            });
+        });
+    </script>
+</head>
+<body>
+    <button onclick="ButtonClick()">Click</button>
+    <p id="status">Button not Pressed</p>
+</body>
+</html>
