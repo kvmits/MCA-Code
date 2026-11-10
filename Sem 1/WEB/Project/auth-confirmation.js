@@ -1,7 +1,10 @@
 const title = document.querySelector("#confirmation-title");
 const message = document.querySelector("#confirmation-message");
 const loginLink = document.querySelector("#confirmation-login");
-const params = new URLSearchParams(window.location.hash.slice(1));
+const params = new URLSearchParams(window.location.search);
+new URLSearchParams(window.location.hash.slice(1)).forEach((value, key) => {
+  params.set(key, value);
+});
 const accessToken = params.get("access_token");
 const refreshToken = params.get("refresh_token");
 const expiresIn = Number(params.get("expires_in") || 3600);
