@@ -1,10 +1,14 @@
-#wap to accept mark and rase expensition if marks are not ebtweenn zero and hundred
+#raise invalid age error for age not negative and 0
 
 try:
-    marks = int(input("Enter marks (0-100): "))
-    if marks < 0 or marks > 100:
-        raise ValueError("Marks must be between 0 and 100.")
-    print("You entered:", marks)
+    age = int(input("Enter your age: "))
+    if age <= 0:
+        raise ValueError("Invalid age. Age must be a positive number.")
+    print("Your age is:", age)
 except ValueError as e:
     print("Error:", e)
+    
+    
+
+    
     
