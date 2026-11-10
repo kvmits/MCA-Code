@@ -25,7 +25,7 @@ if (!$accessToken) {
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $result = supabaseRequest(
-        "listings?select=id,kind,direction,title,description,price,category,seller_name,emoji,tag,image_url,created_at&delisted_at=is.null&order=created_at.desc",
+        "listings?select=id,kind,direction,title,description,price,category,seller_name,contact_email,emoji,tag,image_url,created_at&delisted_at=is.null&order=created_at.desc",
         "GET",
         null,
         $accessToken
@@ -44,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             "price" => $listing["price"],
             "category" => $listing["category"],
             "seller" => $listing["seller_name"],
+            "email" => $listing["contact_email"],
             "initial" => mb_strtoupper(mb_substr($listing["seller_name"], 0, 1)),
             "emoji" => $listing["emoji"],
             "tag" => $listing["tag"],
@@ -98,6 +99,7 @@ if ($image !== null && (!is_string($image)
 
 $result = supabaseRequest("listings", "POST", [
     "owner_id" => $user["id"],
+    "contact_email" => $user["email"],
     "kind" => $kind,
     "direction" => $kind === "gig" ? $direction : null,
     "title" => $title,

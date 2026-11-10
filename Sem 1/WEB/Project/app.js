@@ -105,7 +105,7 @@ function renderListings() {
       <div class="card-content"><div class="card-title-row"><h3 class="card-title">${title}</h3><span class="card-price">${price}</span></div>
         <p class="card-description">${description}</p>
         <div class="card-meta"><span class="seller"><span class="seller-avatar">${escapeHTML(listing.initial || seller.charAt(0).toUpperCase())}</span>${seller}</span><span>${escapeHTML(formatListingTime(listing.createdAt))}</span></div>
-        <button class="enquire-button" type="button" data-enquire="${escapeHTML(listing.id)}" data-title="${title}">Enquire <span aria-hidden="true">→</span></button>
+        <button class="enquire-button" type="button" data-enquire="${escapeHTML(listing.id)}">Enquire <span aria-hidden="true">→</span></button>
       </div>
     </article>`;
   }).join("");
@@ -212,7 +212,20 @@ dialog.addEventListener("click", (event) => {
 grid.addEventListener("click", async (event) => {
   const enquireButton = event.target.closest("[data-enquire]");
   if (enquireButton) {
-    showToast("Contact details are private. Arrange a safe handoff with the seller on campus.");
+    const listing = listings.find((item) => item.id === enquireButton.dataset.enquire);
+    if (!listing || !listing.email) {
+      showToast("This poster's email is unavailable. Try again later.");
+      return;
+    }
+
+    const message = `I am interested in ${listing.title}.`;
+    const gmailUrl = new URL("https://mail.google.com/mail/u/0/");
+    gmailUrl.searchParams.set("view", "cm");
+    gmailUrl.searchParams.set("fs", "1");
+    gmailUrl.searchParams.set("to", listing.email);
+    gmailUrl.searchParams.set("su", message);
+    gmailUrl.searchParams.set("body", message);
+    window.open(gmailUrl.href, "_blank", "noopener");
     return;
   }
   const button = event.target.closest("[data-save]");

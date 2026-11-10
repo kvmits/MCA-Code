@@ -31,6 +31,7 @@ create table if not exists public.listings (
     price numeric(10, 2) not null check (price between 0 and 9999999),
     category text not null check (category in ('books', 'tech', 'living', 'style', 'help', 'other')),
     seller_name text not null check (char_length(seller_name) between 2 and 40),
+    contact_email text,
     emoji text not null default '✳',
     tag text not null default 'CAMPUS FIND',
     image_url text check (image_url is null or char_length(image_url) <= 1400000),
@@ -43,6 +44,12 @@ create table if not exists public.listings (
 );
 
 alter table public.listings add column if not exists delisted_at timestamptz;
+alter table public.listings add column if not exists contact_email text;
+update public.listings as listings
+set contact_email = users.email
+from auth.users as users
+where listings.owner_id = users.id
+  and listings.contact_email is null;
 create index if not exists listings_active_created_at_idx
     on public.listings (created_at desc)
     where delisted_at is null;
