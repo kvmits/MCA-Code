@@ -1,23 +1,5 @@
-const defaultListings = [
-  { id: "book-1", kind: "item", title: "Calculus, 8th edition", description: "Clean pages, great for the first-year maths course.", price: 450, category: "books", seller: "Ananya", initial: "A", time: "12 min ago", emoji: "📚", tag: "GREAT CONDITION" },
-  { id: "tech-1", kind: "item", title: "Wireless headphones", description: "Good sound, comfy fit. Selling since I upgraded.", price: 1200, category: "tech", seller: "Rohan", initial: "R", time: "38 min ago", emoji: "🎧", tag: "PRICE DROP" },
-  { id: "living-1", kind: "item", title: "Study desk lamp", description: "Warm light, adjustable neck. Includes the bulb.", price: 350, category: "living", seller: "Meera", initial: "M", time: "1 hr ago", emoji: "💡", tag: "LIKE NEW" },
-  { id: "style-1", kind: "item", title: "Canvas tote bag", description: "Roomy everyday tote, barely used.", price: 180, category: "style", seller: "Diya", initial: "D", time: "2 hrs ago", emoji: "👜", tag: "CAMPUS PICK" },
-  { id: "book-2", kind: "item", title: "Data structures notes", description: "My neatly organized notes from last semester.", price: 150, category: "books", seller: "Kabir", initial: "K", time: "3 hrs ago", emoji: "📝", tag: "STUDENT FAV" },
-  { id: "tech-2", kind: "item", title: "Scientific calculator", description: "All buttons work perfectly. Great for exams.", price: 600, category: "tech", seller: "Nisha", initial: "N", time: "4 hrs ago", emoji: "🧮", tag: "READY TO GO" },
-  { id: "living-2", kind: "item", title: "Indoor desk plant", description: "Low-maintenance pothos cutting in a ceramic pot.", price: 120, category: "living", seller: "Sana", initial: "S", time: "5 hrs ago", emoji: "🪴", tag: "LITTLE GREEN" },
-  { id: "style-2", kind: "item", title: "Denim jacket", description: "Classic blue, size M. Pick up near the library.", price: 700, category: "style", seller: "Arjun", initial: "A", time: "Yesterday", emoji: "🧥", tag: "GOOD FIND" },
-  { id: "help-1", kind: "gig", title: "Intro to Python tutoring", description: "Friendly one-on-one sessions to work through the basics together.", price: 250, category: "help", seller: "Priya", initial: "P", time: "20 min ago", emoji: "🐍", tag: "TUTORING" },
-  { id: "help-2", kind: "gig", direction: "request", title: "Looking for a project brainstorm buddy", description: "Help me plan milestones and work through a couple of tricky parts.", price: 0, category: "help", seller: "Dev", initial: "D", time: "1 hr ago", emoji: "💡", tag: "HELP WANTED" },
-  { id: "help-3", kind: "gig", title: "Poster & presentation design", description: "I'll help you make your own ideas look polished and presentation-ready.", price: 400, category: "help", seller: "Tara", initial: "T", time: "2 hrs ago", emoji: "🎨", tag: "DESIGN" },
-  { id: "help-4", kind: "gig", direction: "request", title: "Need a calculus study partner", description: "Looking for someone to review limits and derivatives together.", price: 200, category: "help", seller: "Vikram", initial: "V", time: "3 hrs ago", emoji: "📐", tag: "HELP WANTED" },
-  { id: "help-5", kind: "gig", title: "Portfolio feedback", description: "Constructive feedback on your design or dev portfolio, from a fellow student.", price: 0, category: "help", seller: "Nina", initial: "N", time: "5 hrs ago", emoji: "🖥️", tag: "FEEDBACK" },
-  { id: "help-6", kind: "gig", title: "Excel basics, made easy", description: "Learn the formulas and shortcuts I wish I knew in first year.", price: 180, category: "help", seller: "Ishaan", initial: "I", time: "Yesterday", emoji: "📊", tag: "SKILL SHARE" },
-];
-
-const storageKeys = { listings: "campify-listings-v1", saved: "campify-saved-v1" };
-let listings = readStorage(storageKeys.listings, []);
-let savedIds = new Set(readStorage(storageKeys.saved, []));
+let listings = [];
+let savedIds = new Set();
 let currentView = "items";
 let currentCategory = "all";
 let showAll = false;
@@ -31,41 +13,27 @@ const form = document.querySelector("#post-form");
 const kindSelect = document.querySelector("#post-kind");
 const directionSelect = document.querySelector("#post-direction");
 const toast = document.querySelector("#toast");
-const authStorageKey = "campify-auth-session-v1";
-let currentUserEmail = "";
 const profileMenuButton = document.querySelector("[data-profile-menu]");
 const profileDropdown = document.querySelector(".profile-dropdown");
 
-try {
-  const session = JSON.parse(sessionStorage.getItem(authStorageKey) || "null");
-  currentUserEmail = session?.email || "";
-  const avatarButton = document.querySelector("[data-profile-menu]");
-  if (session?.displayName && avatarButton) {
-    avatarButton.textContent = session.displayName.charAt(0).toUpperCase();
-  }
-} catch (error) {
-  console.warn("Campify could not read the display name from the login session.", error);
-}
-
-function logout() {
-    try {
-      sessionStorage.removeItem(authStorageKey);
-    } catch (error) {
-      console.warn("Campify could not clear the login session.", error);
-    }
+async function logout() {
+  try {
+    const response = await fetch("api/auth.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "logout" }),
+    });
+    if (!response.ok) throw new Error("The server could not end your session. Try again.");
     window.location.replace("login.html");
+  } catch (error) {
+    showToast(error.message || "Could not log out. Check your connection and try again.");
+  }
 }
 
 profileMenuButton.addEventListener("click", () => {
   const isOpen = !profileDropdown.hidden;
   profileDropdown.hidden = isOpen;
   profileMenuButton.setAttribute("aria-expanded", String(!isOpen));
-});
-
-document.querySelector("[data-profile]").addEventListener("click", () => {
-  profileDropdown.hidden = true;
-  profileMenuButton.setAttribute("aria-expanded", "false");
-  showToast("Profile settings are coming soon.");
 });
 
 document.querySelector("[data-logout]").addEventListener("click", logout);
@@ -84,46 +52,30 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-function readStorage(key, fallback) {
-  try {
-    const stored = localStorage.getItem(key);
-    return stored ? JSON.parse(stored) : fallback;
-  } catch (error) {
-    console.warn(`Campify could not read saved data (${key}).`, error);
-    return fallback;
-  }
-}
-
-function writeStorage(key, value) {
-  try {
-    localStorage.setItem(key, JSON.stringify(value));
-    return true;
-  } catch (error) {
-    console.warn(`Campify could not save data (${key}).`, error);
-    showToast("Your browser couldn't save this change. Check available storage.");
-    return false;
-  }
-}
-
 function escapeHTML(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   })[character]);
 }
 
-function formatPrice(price) {
-  return Number(price) === 0 ? "Free" : `₹${Number(price).toLocaleString("en-IN")}`;
+function formatListingTime(createdAt) {
+  if (!createdAt) return "Just now";
+  const minutes = Math.max(0, Math.floor((Date.now() - new Date(createdAt).getTime()) / 60000));
+  if (minutes < 1) return "Just now";
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hr${hours === 1 ? "" : "s"} ago`;
+  return `${Math.floor(hours / 24)} day${hours < 48 ? "" : "s"} ago`;
 }
 
-function getListingEmail(listing) {
-  if (listing.email) return listing.email;
-  return `${String(listing.seller).toLowerCase().replace(/[^a-z0-9]+/g, ".")}@mgits.ac.in`;
+function formatPrice(price) {
+  return Number(price) === 0 ? "Free" : `₹${Number(price).toLocaleString("en-IN")}`;
 }
 
 function filteredListings() {
   const query = searchInput.value.trim().toLowerCase();
   const kind = currentView === "items" ? "item" : "gig";
-  return [...listings, ...defaultListings].filter((listing) => {
+  return listings.filter((listing) => {
     if (listing.kind !== kind) return false;
     if (currentCategory !== "all" && listing.category !== currentCategory) return false;
     if (query && !`${listing.title} ${listing.description} ${listing.category} ${listing.seller}`.toLowerCase().includes(query)) return false;
@@ -138,7 +90,6 @@ function renderListings() {
     const title = escapeHTML(listing.title);
     const description = escapeHTML(listing.description);
     const seller = escapeHTML(listing.seller);
-    const listingEmail = escapeHTML(getListingEmail(listing));
     const tag = escapeHTML(listing.tag || (listing.kind === "gig" ? "STUDENT HELP" : "CAMPUS FIND"));
     const saved = savedIds.has(listing.id);
     const price = listing.kind === "gig" && listing.direction === "request"
@@ -153,8 +104,8 @@ function renderListings() {
       </div>
       <div class="card-content"><div class="card-title-row"><h3 class="card-title">${title}</h3><span class="card-price">${price}</span></div>
         <p class="card-description">${description}</p>
-        <div class="card-meta"><span class="seller"><span class="seller-avatar">${escapeHTML(listing.initial || seller.charAt(0).toUpperCase())}</span>${seller}</span><span>${escapeHTML(listing.time || "Just now")}</span></div>
-        <button class="enquire-button" type="button" data-enquire="${escapeHTML(listing.id)}" data-email="${listingEmail}" data-title="${title}">Enquire <span aria-hidden="true">→</span></button>
+        <div class="card-meta"><span class="seller"><span class="seller-avatar">${escapeHTML(listing.initial || seller.charAt(0).toUpperCase())}</span>${seller}</span><span>${escapeHTML(formatListingTime(listing.createdAt))}</span></div>
+        <button class="enquire-button" type="button" data-enquire="${escapeHTML(listing.id)}" data-title="${title}">Enquire <span aria-hidden="true">→</span></button>
       </div>
     </article>`;
   }).join("");
@@ -173,8 +124,8 @@ function renderListings() {
 }
 
 function updateCounts() {
-  document.querySelector('[data-view="items"] span').textContent = String([...listings, ...defaultListings].filter((item) => item.kind === "item").length).padStart(2, "0");
-  document.querySelector('[data-view="gigs"] span').textContent = String([...listings, ...defaultListings].filter((item) => item.kind === "gig").length).padStart(2, "0");
+  document.querySelector('[data-view="items"] span').textContent = String(listings.filter((item) => item.kind === "item").length).padStart(2, "0");
+  document.querySelector('[data-view="gigs"] span').textContent = String(listings.filter((item) => item.kind === "gig").length).padStart(2, "0");
 }
 
 function showToast(message) {
@@ -193,6 +144,8 @@ function openDialog(kind) {
 function updateFormKind() {
   const isGig = kindSelect.value === "gig";
   const isRequest = isGig && directionSelect.value === "request";
+  const categorySelect = document.querySelector("#post-category");
+  const helpCategory = categorySelect.querySelector('option[value="help"]');
   document.querySelector(".gig-direction-field").hidden = !isGig;
   document.querySelector("#price-label").textContent = isRequest ? "Reward offered (₹)" : isGig ? "Rate (₹)" : "Price (₹)";
   document.querySelector("#dialog-title").textContent = isRequest ? "Find help on campus" : isGig ? "Share a skill with campus" : "Share it with campus";
@@ -200,7 +153,10 @@ function updateFormKind() {
   document.querySelector("#form-hint").textContent = isGig
     ? "Keep it to tutoring, feedback, and project guidance — not completed coursework."
     : "Only post items you own and can hand over safely on campus.";
-  if (isGig) document.querySelector("#post-category").value = "help";
+  helpCategory.hidden = !isGig;
+  helpCategory.disabled = !isGig;
+  if (isGig) categorySelect.value = "help";
+  else if (categorySelect.value === "help") categorySelect.value = "books";
 }
 
 document.querySelectorAll(".market-tab").forEach((button) => {
@@ -253,52 +209,81 @@ directionSelect.addEventListener("change", updateFormKind);
 dialog.addEventListener("click", (event) => {
   if (event.target === dialog) dialog.close();
 });
-grid.addEventListener("click", (event) => {
+grid.addEventListener("click", async (event) => {
   const enquireButton = event.target.closest("[data-enquire]");
   if (enquireButton) {
-    const title = enquireButton.dataset.title;
-    const recipient = enquireButton.dataset.email;
-    const subject = `I'm interested in ${title}`;
-    const body = `I'm interested in ${title}`;
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.open(gmailUrl, "_blank", "noopener,noreferrer");
+    showToast("Contact details are private. Arrange a safe handoff with the seller on campus.");
     return;
   }
   const button = event.target.closest("[data-save]");
   if (!button) return;
   const id = button.dataset.save;
-  if (savedIds.has(id)) savedIds.delete(id);
-  else savedIds.add(id);
-  writeStorage(storageKeys.saved, [...savedIds]);
-  renderListings();
-  showToast(savedIds.has(id) ? "Saved to your favorites." : "Removed from your favorites.");
+  const action = savedIds.has(id) ? "remove" : "save";
+  button.disabled = true;
+  try {
+    const response = await fetch("api/favorites.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action, listingId: id }),
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Could not update your saved listings.");
+    if (action === "save") savedIds.add(id);
+    else savedIds.delete(id);
+    renderListings();
+    showToast(action === "save" ? "Saved to your favorites." : "Removed from your favorites.");
+  } catch (error) {
+    showToast(error.message || "Could not update your saved listings. Try again.");
+  } finally {
+    if (button.isConnected) button.disabled = false;
+  }
 });
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(form);
   const kind = data.get("kind");
   const imageFile = data.get("image");
-  const saveListing = (image) => {
-    const seller = "You";
-    const listing = {
-      id: `user-${Date.now()}`,
-      kind,
-      title: data.get("title").trim(),
-      description: data.get("description").trim(),
-      price: Number(data.get("price")),
-      category: kind === "gig" ? "help" : data.get("category"),
-      ...(kind === "gig" ? { direction: data.get("direction") } : {}),
-      seller,
-      email: currentUserEmail,
-      initial: "Y",
-      time: "Just now",
-      emoji: kind === "gig" ? "✳" : "📦",
-      tag: kind === "gig" ? (data.get("direction") === "request" ? "HELP WANTED" : "STUDENT HELP") : "JUST LISTED",
-      ...(image ? { image } : {}),
-    };
-    listings.unshift(listing);
-    const stored = writeStorage(storageKeys.listings, listings);
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  try {
+    let image = null;
+    if (imageFile instanceof File && imageFile.size > 0) {
+      if (!["image/png", "image/jpeg", "image/gif", "image/webp"].includes(imageFile.type)) {
+        throw new Error("Choose a PNG, JPEG, GIF, or WebP image.");
+      }
+      if (imageFile.size > 1024 * 1024) {
+        throw new Error("Choose an image under 1 MB.");
+      }
+      image = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => resolve(reader.result), { once: true });
+        reader.addEventListener("error", () => reject(new Error("Couldn't load that photo. Try a different image.")), { once: true });
+        reader.readAsDataURL(imageFile);
+      });
+    }
+
+    const response = await fetch("api/listings.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        kind,
+        direction: kind === "gig" ? data.get("direction") : null,
+        title: data.get("title"),
+        description: data.get("description"),
+        price: data.get("price"),
+        category: data.get("category"),
+        image,
+      }),
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Your post could not be saved.");
+
+    const listingsResponse = await fetch("api/listings.php");
+    const listingsResult = await listingsResponse.json();
+    if (!listingsResponse.ok) throw new Error(listingsResult.error || "Your post was saved, but listings could not be refreshed.");
+    listings = listingsResult.listings;
+
     form.reset();
     kindSelect.value = kind;
     updateFormKind();
@@ -308,23 +293,11 @@ form.addEventListener("submit", (event) => {
     dialog.close();
     renderListings();
     document.querySelector("#marketplace").scrollIntoView({ behavior: "smooth" });
-    showToast(stored ? "Your post is live on this device." : "Your post is available for this session, but couldn't be saved.");
-  };
-  if (imageFile instanceof File && imageFile.size > 0) {
-    if (!imageFile.type.startsWith("image/")) {
-      showToast("Please choose an image file.");
-      return;
-    }
-    if (imageFile.size > 2 * 1024 * 1024) {
-      showToast("Please choose an image under 2 MB.");
-      return;
-    }
-    const reader = new FileReader();
-    reader.addEventListener("load", () => saveListing(reader.result), { once: true });
-    reader.addEventListener("error", () => showToast("Couldn't load that photo. Try a different image."), { once: true });
-    reader.readAsDataURL(imageFile);
-  } else {
-    saveListing(null);
+    showToast("Your post is live on campus.");
+  } catch (error) {
+    showToast(error.message || "Your post could not be saved. Try again.");
+  } finally {
+    submitButton.disabled = false;
   }
 });
 
@@ -335,4 +308,49 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-renderListings();
+async function initializeApp() {
+  try {
+    const sessionResponse = await fetch("api/auth.php?action=session");
+    const session = await sessionResponse.json();
+    if (!sessionResponse.ok || !session.authenticated) {
+      window.location.replace("login.html");
+      return;
+    }
+
+    const [listingsResponse, favoritesResponse] = await Promise.all([
+      fetch("api/listings.php"),
+      fetch("api/favorites.php"),
+    ]);
+    const [result, favorites] = await Promise.all([
+      listingsResponse.json(),
+      favoritesResponse.json(),
+    ]);
+    if (!listingsResponse.ok) {
+      if (listingsResponse.status === 401) {
+        window.location.replace("login.html");
+        return;
+      }
+      throw new Error(result.error || "Could not load campus listings.");
+    }
+    if (!favoritesResponse.ok) {
+      if (favoritesResponse.status === 401) {
+        window.location.replace("login.html");
+        return;
+      }
+      throw new Error(favorites.error || "Could not load your saved listings.");
+    }
+
+    listings = result.listings;
+    savedIds = new Set(favorites.listingIds);
+    if (session.user.displayName) {
+      profileMenuButton.textContent = session.user.displayName.charAt(0).toUpperCase();
+    }
+    document.body.hidden = false;
+    renderListings();
+  } catch (error) {
+    document.body.hidden = false;
+    showToast(error.message || "Could not connect to Campify. Check that PHP and Supabase are running.");
+  }
+}
+
+initializeApp();

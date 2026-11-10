@@ -1,0 +1,3 @@
+10, Wolker, 20
+11, Febin, 50
+10, Rahul, 30

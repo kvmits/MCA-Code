@@ -1,0 +1,14 @@
+<html>
+    <body>
+        <h1 id="d">Hellooooo</h1>
+        <script>
+            const colors = ["red", "blue", "green", "orange", "purple", "hotpink", "gold", "teal", "crimson", "lime", "darkviolet", "deeppink"];
+            let i = 0;
+            setInterval(function() {
+                document.getElementById("d").style.color = colors[i];
+                
+                i = (i + 1) % colors.length; 
+            }, 100);
+        </script>
+    </body>
+</html>

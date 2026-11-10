@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8f5">
+    <meta name="description" content="Manage your Campify listings and account settings.">
+    <title>Your profile — Campify</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="profile.js" defer></script>
+  </head>
+  <body hidden>
+    <header class="topbar">
+      <div class="collab-brand">
+        <a class="brand" href="index.html" aria-label="Campify marketplace">
+          <span class="brand-mark" aria-hidden="true">c</span>
+          <span>campify<span class="brand-dot">.</span></span>
+        </a>
+        <span class="collab-divider" aria-hidden="true">|</span>
+        <img class="college-logo" src="collegelogo.png" alt="MITS">
+      </div>
+      <a class="button button-outline profile-back" href="index.html">← Marketplace</a>
+    </header>
+
+    <main class="profile-page">
+      <div class="eyebrow"><span class="eyebrow-spark">✳</span> YOUR CAMPIFY ACCOUNT</div>
+      <h1 class="profile-title">Your profile</h1>
+      <p class="profile-email" id="profile-email"></p>
+
+      <div class="profile-tabs" role="tablist" aria-label="Profile sections">
+        <button class="profile-tab active" type="button" role="tab" aria-selected="true" aria-controls="my-listings-panel" data-profile-tab="listings">Listed by me</button>
+        <button class="profile-tab" type="button" role="tab" aria-selected="false" aria-controls="account-settings-panel" data-profile-tab="settings">Account settings</button>
+      </div>
+
+      <section id="my-listings-panel" class="profile-panel" role="tabpanel" aria-labelledby="profile-listings-title">
+        <div class="profile-section-heading">
+          <div>
+            <div class="eyebrow">YOUR CAMPUS POSTS</div>
+            <h2 id="profile-listings-title">Listed by me</h2>
+          </div>
+          <a class="text-button" href="index.html">Post something <span aria-hidden="true">↗</span></a>
+        </div>
+        <div id="profile-listings" class="profile-listings"></div>
+        <div id="profile-listings-empty" class="profile-empty" hidden>
+          <span aria-hidden="true">✳</span>
+          <h3>No listings yet</h3>
+          <p>Anything you post to the marketplace will show up here.</p>
+          <a class="button button-dark" href="index.html">Explore the marketplace</a>
+        </div>
+      </section>
+
+      <section id="account-settings-panel" class="profile-panel" role="tabpanel" aria-labelledby="profile-settings-title" hidden>
+        <div class="profile-section-heading">
+          <div>
+            <div class="eyebrow">KEEP YOUR ACCOUNT SECURE</div>
+            <h2 id="profile-settings-title">Account settings</h2>
+          </div>
+        </div>
+        <form id="change-password-form" class="profile-form" novalidate>
+          <h3>Change password</h3>
+          <p>Confirm your current password before choosing a new one.</p>
+          <label class="field-label" for="current-password">Current password</label>
+          <input id="current-password" name="currentPassword" type="password" autocomplete="current-password" required>
+          <label class="field-label" for="new-password">New password</label>
+          <input id="new-password" name="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+          <label class="field-label" for="confirm-new-password">Confirm new password</label>
+          <input id="confirm-new-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" required>
+          <p class="profile-form-message" id="password-message" role="status" aria-live="polite" hidden></p>
+          <button class="button button-dark" type="submit">Update password</button>
+        </form>
+
+        <form id="delete-account-form" class="profile-form delete-account-form" novalidate>
+          <h3>Delete account</h3>
+          <p>This permanently deletes your account, your listings and your saved favorites. This cannot be undone.</p>
+          <label class="field-label" for="delete-current-password">Current password</label>
+          <input id="delete-current-password" name="currentPassword" type="password" autocomplete="current-password" required>
+          <label class="delete-confirm-label">
+            <input id="confirm-delete" name="confirmed" type="checkbox" required>
+            <span>I understand my account and all my listings will be permanently deleted.</span>
+          </label>
+          <p class="profile-form-message" id="delete-message" role="alert" hidden></p>
+          <button class="button button-danger" type="submit">Delete my account</button>
+        </form>
+      </section>
+    </main>
+    <div class="toast" id="profile-toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

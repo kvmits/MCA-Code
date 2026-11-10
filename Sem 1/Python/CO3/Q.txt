@@ -1,0 +1,28 @@
+1. Accept n item records containing item number, item name, and price. Store the records in a
+text file. Read and display all the records.
+2. Open an existing student file with data roll number, name, course in append mode. Add
+details of a new student. Display the updated contents of the file.
+3. Read a text file. Find and display the number of lines, words, and characters in the file.
+4. Accept a word from the user. Search for the word in a text file. Display whether the word is
+found and the number of times it occurs.
+5. Use the os module to display all files and subdirectories in a given directory. Separately
+display the number of files and directories.
+6. Accept a directory name from the user. Create the directory if it does not exist. Rename or
+remove the directory based on the user&#39;s choice.
+7. Accept two numbers from the user and perform division. Handle ZeroDivisionError if the
+denominator is zero. Handle ValueError if the user enters non-numeric data.
+8. Write a Python program to accept the marks obtained by a student in three subjects and
+calculate and display the average marks. The program should use exception handling to
+handle invalid (non-numeric) input. It should also raise an appropriate exception if any mark
+entered is less than 0 or greater than 100. Display a suitable error message when an
+exception occurs.
+9. Accept an email address from the user. Use the re module to check whether it follows a valid
+basic email format. Display whether the email is valid or invalid.
+10. Write a Python program using the re module to extract and display all valid 10-digit Indian
+mobile numbers from a given text. The mobile number should begin with 6, 7, 8, or 9. Use a
+suitable regular expression to identify the valid mobile numbers.
+Contact Anu at 9876543210, Rahul at 9123456780 and Meera at 8123456789.
+Valid mobile numbers:
+9876543210
+9123456780
+8123456789

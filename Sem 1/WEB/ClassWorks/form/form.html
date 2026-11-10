@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MITS Site Registration</title>
+    <style>
+        /* Force the body to take up the full screen space without scrollbars */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Container that structures the view into side-by-side columns */
+        .flex-container {
+            display: flex;
+            flex-direction: row; /* Arranges panels horizontally left-to-right */
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Left iframe takes up exactly 60% of the screen width */
+        .left-frame {
+            width: 30%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Right iframe takes up exactly 40% of the screen width */
+        .right-frame {
+            width: 70%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex-container">
+        <iframe src="https://mgmits.ac.in" class="right-frame" name="rightFrame" title="MITS Official Website"></iframe>
+        <iframe src="mcaform.html" class="left-frame" name="leftFrame" title="MITS Registration Form"></iframe>   
+    </div>
+</body>
+</html>

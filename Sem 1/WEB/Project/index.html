@@ -6,22 +6,14 @@
     <meta name="theme-color" content="#f7f8f5">
     <meta name="description" content="Buy, sell, and find student-to-student help on your campus with Campify.">
     <title>Campify — Your campus, your marketplace</title>
-    <script>
-      try {
-        if (!sessionStorage.getItem("campify-auth-session-v1")) {
-          window.location.replace("login.html");
-        }
-      } catch (error) {
-        window.location.replace("login.html");
-      }
-    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
   </head>
-  <body>
+  <body hidden>
+    <noscript><style>body[hidden] { display: block !important; }</style><p>Campify needs JavaScript and PHP-enabled hosting to load listings.</p></noscript>
     <header class="topbar">
       <div class="collab-brand">
         <a class="brand" href="#" aria-label="Campify home">
@@ -36,11 +28,11 @@
         <a class="nav-link" href="#marketplace" data-nav-view="gigs">Student help</a>
       </nav>
       <div class="top-actions">
-        <span class="campus-pill"><span class="status-dot"></span> MITS campus · preview</span>
+        <span class="campus-pill"><span class="status-dot"></span> MITS campus · members</span>
         <div class="profile-menu">
           <button class="avatar-button" type="button" aria-label="Open profile menu" aria-expanded="false" aria-haspopup="menu" data-profile-menu>A</button>
           <div class="profile-dropdown" role="menu" hidden>
-            <button type="button" role="menuitem" data-profile>Profile</button>
+            <a href="profile.html" role="menuitem">Profile</a>
             <button type="button" role="menuitem" data-logout>Logout</button>
           </div>
         </div>
@@ -107,7 +99,7 @@
 
       <section class="campus-note">
         <span class="campus-note-icon">◎</span>
-        <div><b>Campus-sized community. Real student connections.</b>        <p>This is a front-end preview: posts stay in this browser and campus membership is not verified yet. Meet in public places and verify campus membership before exchanging.</p></div>
+        <div><b>Campus-sized community. Real student connections.</b>        <p>Listings are shared with signed-in members. Meet in public places and verify campus membership before exchanging.</p></div>
         <span class="verified-label"><span class="status-dot"></span> CAMPUS FIRST</span>
       </section>
     </main>
