@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8f5">
+    <meta name="description" content="Confirming your Campify email address.">
+    <title>Confirming your email — Campify</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth-confirmation.js" defer></script>
+  </head>
+  <body>
+    <main class="confirmation-screen">
+      <section class="confirmation-card" aria-labelledby="confirmation-title">
+        <a class="brand confirmation-brand" href="login.html" aria-label="Campify sign in">
+          <span class="brand-mark" aria-hidden="true">c</span>
+          <span>campify<span class="brand-dot">.</span></span>
+        </a>
+        <div class="confirmation-icon" aria-hidden="true">✳</div>
+        <div class="eyebrow">EMAIL CONFIRMATION</div>
+        <h1 id="confirmation-title">Confirming your email…</h1>
+        <p id="confirmation-message" role="status" aria-live="polite">Please wait while we finish setting up your account.</p>
+        <a class="button button-dark confirmation-button" id="confirmation-login" href="login.html" hidden>Go to sign in</a>
+      </section>
+    </main>
+  </body>
+</html>

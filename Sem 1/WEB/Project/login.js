@@ -1,5 +1,3 @@
-const accountStorageKey = "campify-accounts-v1";
-const authStorageKey = "campify-auth-session-v1";
 const loginForm = document.querySelector("#login-form");
 const loginError = document.querySelector("#login-error");
 const collegeEmailInput = document.querySelector("#login-email");
@@ -11,56 +9,26 @@ const submitLabel = document.querySelector("#submit-label");
 const authTabs = document.querySelectorAll("[data-auth-mode]");
 let authMode = "login";
 
-try {
-  if (sessionStorage.getItem(authStorageKey)) {
-    window.location.replace("index.html");
-  }
-} catch (error) {
-  console.warn("Campify could not read the login session.", error);
+if (new URLSearchParams(window.location.search).get("notice") === "account-deleted") {
+  showSuccess("Your account and listings have been deleted.");
 }
 
-function readAccounts() {
-  try {
-    const accounts = JSON.parse(localStorage.getItem(accountStorageKey) || "[]");
-    return Array.isArray(accounts) ? accounts : [];
-  } catch (error) {
-    console.warn("Campify could not read local accounts.", error);
-    return [];
-  }
-}
-
-function bytesToBase64(bytes) {
-  return btoa(String.fromCharCode(...bytes));
-}
-
-function base64ToBytes(value) {
-  return Uint8Array.from(atob(value), (character) => character.charCodeAt(0));
-}
-
-async function derivePasswordHash(password, salt) {
-  const passwordKey = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(password),
-    "PBKDF2",
-    false,
-    ["deriveBits"],
-  );
-  const derivedBits = await crypto.subtle.deriveBits(
-    { name: "PBKDF2", salt: base64ToBytes(salt), iterations: 100000, hash: "SHA-256" },
-    passwordKey,
-    256,
-  );
-  return bytesToBase64(new Uint8Array(derivedBits));
-}
-
-function createSalt() {
-  const salt = new Uint8Array(16);
-  crypto.getRandomValues(salt);
-  return bytesToBase64(salt);
-}
+fetch("api/auth.php?action=session")
+  .then((response) => response.json())
+  .then((result) => {
+    if (result.authenticated) window.location.replace("index.html");
+  })
+  .catch(() => showError("Could not check your sign-in session. Make sure PHP is running."));
 
 function showError(message) {
   loginError.textContent = message;
+  loginError.classList.remove("success");
+  loginError.hidden = false;
+}
+
+function showSuccess(message) {
+  loginError.textContent = message;
+  loginError.classList.add("success");
   loginError.hidden = false;
 }
 
@@ -92,8 +60,6 @@ loginForm.addEventListener("submit", async (event) => {
   const email = collegeEmailInput.value.trim().toLowerCase();
   const displayName = displayNameInput.value.trim();
   const password = document.querySelector("#login-password").value;
-  const confirmPassword = confirmPasswordInput.value;
-
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     showError("Enter a valid email address.");
     collegeEmailInput.focus();
@@ -114,48 +80,40 @@ loginForm.addEventListener("submit", async (event) => {
     document.querySelector("#login-password").focus();
     return;
   }
-  if (authMode === "register" && password !== confirmPassword) {
+  if (authMode === "register" && password !== confirmPasswordInput.value) {
     showError("Those passwords do not match.");
     confirmPasswordInput.focus();
     return;
   }
 
+  const submitButton = loginForm.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitLabel.textContent = "Please wait...";
   try {
-    const accounts = readAccounts();
-    const existingAccount = accounts.find((account) => account.email === email);
-
-    if (authMode === "register") {
-      if (existingAccount) {
-        showError("That college email is already registered.");
-        collegeEmailInput.focus();
-        return;
-      }
-      const salt = createSalt();
-      accounts.push({
+    const response = await fetch("api/auth.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: authMode,
         email,
-        displayName,
-        salt,
-        passwordHash: await derivePasswordHash(password, salt),
-      });
-      localStorage.setItem(accountStorageKey, JSON.stringify(accounts));
-    } else if (
-      !existingAccount
-      || !existingAccount.salt
-      || existingAccount.passwordHash !== await derivePasswordHash(password, existingAccount.salt)
-    ) {
-      showError("That email and password don't match. Try again.");
-      document.querySelector("#login-password").focus();
+        password,
+        ...(authMode === "register" ? { displayName } : {}),
+      }),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      showError(result.error || "Authentication failed. Try again.");
       return;
     }
-
-    sessionStorage.setItem(authStorageKey, JSON.stringify({
-      email,
-      displayName: existingAccount?.displayName || displayName,
-    }));
+    if (result.confirmationRequired) {
+      window.location.assign(`check-email.html?message=${encodeURIComponent(result.message)}`);
+      return;
+    }
+    window.location.replace("index.html");
   } catch (error) {
-    console.warn("Campify could not save the account or login session.", error);
-    showError("Could not save your account in this browser. Check storage permissions and try again.");
-    return;
+    showError("Could not reach Campify. Run the site through PHP/Apache and try again.");
+  } finally {
+    submitButton.disabled = false;
+    submitLabel.textContent = authMode === "register" ? "Create account" : "Sign in";
   }
-  window.location.replace("index.html");
 });
