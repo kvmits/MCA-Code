@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title> MCA Form</title>
+        <style>
+             #bod {
+            margin: 0;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;     
+            min-height: 90vh;
+            }
+            #div1{
+                padding-left: 20px;
+                padding-bottom: 20px;
+                text-align: left;
+                background-color: lightblue;
+                max-width: 100vh;
+                border-radius: 10px;
+            }
+            label{
+                font-size: large;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            }
+            #clear{
+                color: red;
+                border-color: white;
+                border-radius: 8px;
+                font-size: large;
+            }
+            #submit{
+                color: green;
+                border-color: white;
+                border-radius: 8px;
+                font-size: large;
+            } */
+        </style>
+    </head>
+<body id="bod">
+    <div id="div1">
+        <br>
+        <h1>MCA Registration Form</h1>
+        <form>
+            <br>
+            <label>Full Name:</label>
+            <input type="text" name="sname" id="sname" placeholder="Enter You full Name" required>
+            <br><br>
+            <label>Date Of Birth:</label>
+            <input type="date" name="date" id="name" required>
+            <br><br>
+            <label>Gender:</label>
+            <label><input type="radio" name="gender" value="Male">Male</label>
+            <label><input type="radio" name="gender" value="Female">Female</label>
+            <label><input type="radio" name="gender" value="Others">Others</label>
+            <br><br>
+            <label>Email:</label>
+            <input type="email" name="email" id="email" required placeholder="Email">
+            <br><br>
+            <label>Phone:</label>
+            <input type="tel" name="phone" id="phone" required placeholder="Phone Number">
+            <br><br>
+            <label>Address:</label>
+            <textarea id="address" name="address" placeholder="Enter you Address"></textarea>
+            <br><br>
+            <label>Previous Course:</label>
+            <select id="course" name="course">
+                <option value="bba">BBA</option>
+                <option value="bcom">BCOM</option>
+                <option value="bca">BCA</option>
+                <option value="btech">BTech</option>
+                <option value="bsc">BSc</option>
+            </select>
+            <br><br>
+            <label>Previous College Name:</label>
+            <input type="text" id="college" name="college" required>
+            <br><br>
+            <label>CGPA:</label>
+            <input type="number" id="cgpa" name="cgpa" min="0" max="11.99" step="0.01" placeholder="CGPA">
+            <br><br>
+            <label>Extracurricular</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="back" value="yes"> Sports</label>
+                    <label><input type="checkbox" name="back" value="no"> NCC</label>
+                    <label><input type="checkbox" name="back" value="no"> NSS</label>
+                </div>
+            <br>
+            <label>Upload Profile Photo:</label>
+            <input type="file" id="photo" name="photo" required>
+            <br><br>
+            <button id="submit" type="submit" class="submit">Apply</button>
+            <button id="clear" type="reset">Clear</button>
+            <br>
+        </form>
+    </div>
+</body>
+</html>
