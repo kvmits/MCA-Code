@@ -1,0 +1,11 @@
+1. Class, Objects and Constructors: Write a Python program to create a class Student with attributes roll number, name and marks. Initialize the attributes using a constructor and display the student details.
+
+2. Encapsulation and Data Hiding: Write a Python program to demonstrate encapsulation using a class BankAccount. Create a private variable to store the account balance and provide methods to deposit, withdraw and display the balance.
+
+3. Multiple Inheritance: Write a Python program to demonstrate multiple inheritance using classes Academic and Sports. Create a derived class Result to calculate and display the total marks.
+
+4. Method Overriding and Polymorphism: Write a Python program to demonstrate method overriding using a base class Employee and derived classes PermanentEmployee and ContractEmployee. Override the method calculate_salary() to calculate salary differently.
+
+5. Objects as Arguments: Write a Python program to create a class Rectangle with attributes length and breadth. Write a function that accepts two Rectangle objects as arguments and compares their areas.
+
+6. Objects as Return Values: Write a Python program to create a class Employee with attributes name and salary. Write a function that accepts two Employee objects and returns the object having the higher salary. Display the details of the returned object.
