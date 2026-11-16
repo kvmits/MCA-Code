@@ -8,7 +8,7 @@
     <form id="registrationForm">
         <label>Name: <input type="text" id="name" required></label><br><br>
         <label>Email: <input type="email" id="email" required></label><br><br>
-        <label>Password: <input type="password" id="password" required></label><br><br>
+        <label>Phone Number: <input type="tel" id="phone" pattern="[0-9]{10}" required></label><br><br>
         <button type="submit">Register</button>
     </form>
     <p id="message"></p>
@@ -16,11 +16,11 @@
     <script>
         document.getElementById("registrationForm").addEventListener("submit", function (event) {
             event.preventDefault();
-            const password = document.getElementById("password").value;
+            const phone = document.getElementById("phone").value;
             const message = document.getElementById("message");
 
-            if (password.length < 6) {
-                message.textContent = "Password must be at least 6 characters.";
+            if (!/^\d{10}$/.test(phone)) {
+                message.textContent = "Phone number must be exactly 10 digits.";
             } else {
                 message.textContent = "Registration successful!";
             }
