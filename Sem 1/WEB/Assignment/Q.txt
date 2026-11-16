@@ -1,0 +1,20 @@
+11.Create an HTML registration form and validate the form
+using JavaScript code.
+
+12.Build a PHP code to store students name and age in an associative
+array and display it using foreach loop. Sort and display the array using ksort,
+krsort, asort & arsort functions.
+
+13.Compose Electricity bill from user input based on a
+given tariff using PHP.
+
+14.Create Database mca2026, and a table named student
+under the database. Implement all the DDL, SELECT commands and CRUD operations
+on the student table in MySQL.
+
+15.Develop a web application that accepts the user's name and age through an HTML form, stores the submitted information in a MySQL database table, and retrieves and displays all the existing records on the webpage using PHP.Regards,
+
+16.Develop a web application using PHP and MySQL to perform the following operations:
+	1. Create an HTML form to accept book details, including Book ID, Title, Author(s), Edition, and Publisher.2. Store the submitted book details in a MySQL database table.
+	3. Implement a search functionality that accepts an author's name and retrieves all books associated with that author.
+	4. Display the matching book records on the webpage.
