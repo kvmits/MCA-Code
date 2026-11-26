@@ -1,0 +1,39 @@
+CO! based Q
+
+Write a program to accpet 2 int and calcuslates thier avg 
+as a floadting point value
+
+write a program to find the multiplication table from 1 to 5
+using nesting loops
+
+write a program to didsplay a number in the following pattern 
+	1
+	1 2
+	1 2 3
+	1 2 3 4
+	1 2 3 4 5
+	
+write a program consider the list of numbers [10 20 30]
+add 40 to the list, remove 20 print updated list each time
+
+
+write a program input a sentence 
+display the number of charecters words vowlels 
+number of occurances of the letter "a" , the sentence in reverse order 
+
+Check if a email given by the user is valid or not 
+
+accpet item_number item_detials and price for an item
+sotre it in a text file 
+read and dispaly all the records 
+
+use list comprehension to create a list containing a list of squares of numbers from 
+1 to 10
+
+wap to create a class student with attirbutes roll, name, mark
+create a spelling an object and display student detisla using method 
+
+create a class product with a constrictor to initialize 
+product_id product_name and qty write a method to calculate and display
+the total cost based on qty and unit price
+

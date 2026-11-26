@@ -2,20 +2,32 @@
 # records in a text file. Read and display all the records.
 
 
-f = open("CO3_1.txt", "w")
-n = int(input("Enter the number of items: "))
-for i in range(n):
-    number = input("Enter item number: ")
-    name = input("Enter item name: ")
-    price = input("Enter price: ")
-    push = number + "," + name + "'" + price
-    f.write(push)
-f.close()
+item_count = int(input("Enter the number of items: "))
 
-t = open("items.txt","r")
+with open("CO3_1.txt", "w") as item_file:
+    for _ in range(item_count):
+        number = input("Enter item number: ")
+        name = input("Enter item name: ")
+        price = input("Enter price: ")
+        item_file.write(f"{number},{name},{price}\n")
 
-content = t.readlines()
+with open("CO3_1.txt", "r") as item_file:
+    print("\nItem records:")
+    print(item_file.read(), end="")
 
-print(content)
+'''
+Output:
+Enter the number of items: 2
+Enter item number: 101
+Enter item name: Pen
+Enter price: 10
+Enter item number: 102
+Enter item name: Notebook
+Enter price: 50
+
+Item records:
+101,Pen,10
+102,Notebook,50
+'''
     
     

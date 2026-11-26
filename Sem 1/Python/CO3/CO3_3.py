@@ -17,3 +17,10 @@ for char in content:
 print("Characters:",count)
 f.close()
 
+'''
+Output:
+Lines: 3
+Words: 13
+Characters: 66
+'''
+
